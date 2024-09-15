@@ -1,0 +1,14 @@
+.pieces {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--t-gap);
+  height: 100%;
+  position: relative;
+}
+
+.pieces.portrait {
+  flex-direction: row;
+}

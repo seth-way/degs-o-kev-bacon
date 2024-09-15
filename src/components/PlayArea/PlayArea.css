@@ -1,0 +1,6 @@
+#puzzle {
+  width: calc(var(--t-width) * 2 + (var(--t-gap) * 8));
+  height: calc(var(--t-height) * 2 + (var(--t-gap) * 2));
+  position: relative;
+}
+

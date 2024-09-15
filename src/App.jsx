@@ -1,14 +1,19 @@
 import './App.css';
-import jaws from './assets/images/jaws.jpg';
-import { TriangleUp } from './components/triangles/TriangleUp';
-import { TriangleDown } from './components/triangles/TriangleDown';
+import { useState, useEffect, useLayoutEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Home from './components/Home/Home';
+import GameBoard from './components/GameBoard/GameBoard';
+import Error from './components/Error/Error';
 
 function App() {
   return (
     <>
-      <TriangleDown id='2' image={jaws} />
-      <TriangleUp id='1' image={jaws} />
-      {/* <div className='triangle'></div> */}
+      <Routes>
+        <Route exact path='/' element={<Home />} />
+        <Route path='puzzles/:puzzleId' element={<GameBoard />} />
+        <Route path='error/:errorCode' element={<Error />} />
+        <Route path='*' element={<Error />} />
+      </Routes>
     </>
   );
 }

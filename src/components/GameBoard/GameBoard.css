@@ -1,0 +1,11 @@
+#gameboard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  gap: calc(var(--t-width) / 2);
+}
+
+#gameboard.portrait {
+  flex-direction: column;
+}
