@@ -12,8 +12,7 @@ const Bubble = ({ id, image, type }) => {
     disabled: image !== '',
   });
 
-  const style = {
-    background: isOver ? 'green' : undefined,
+  const style = type === 'hub' ? {color: 'var(--hub-color)'} : {
     color: isOver ? 'black' : 'currentColor',
   };
 

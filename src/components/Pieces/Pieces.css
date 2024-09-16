@@ -1,16 +1,19 @@
 .pieces {
-  /* display: flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: var(--t-gap); */
+  gap: var(--t-gap);
   position: relative;
-  height: 300px;
-  width: 300px;
-  background: pink;
+  height: calc(3 * var(--t-width));
+  width: calc(1.5 * var(--t-width));
+  border: thick solid var(--text);
+  border-radius: 1.5rem;
 }
 
 .pieces.portrait {
   flex-direction: row;
+  width: calc(3 * var(--t-width));
+  height: calc(1.5 * var(--t-width));
 }

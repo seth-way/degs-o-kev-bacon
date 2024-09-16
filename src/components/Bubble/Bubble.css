@@ -13,26 +13,26 @@
 }
 
 #b1 {
-  top: calc(var(--bubble-size) / -2);
-  left: calc(var(--t-width) / 2 - var(--bubble-size) / 2);
+  top: calc(50% - var(--bubble-size) / 2);
+  left: calc(var(--bubble-size) / -2);
 }
 #b2 {
   top: calc(var(--bubble-size) / -2);
-  right: calc(var(--t-width) / 2 - var(--bubble-size) / 2);
+  left: calc(var(--t-width) / 2 - var(--bubble-size) / 2);
 }
 #b3 {
+  top: calc(var(--bubble-size) / -2);
+  right: calc(var(--t-width) / 2 - var(--bubble-size) / 2);
+}
+#b4 {
   top: calc(50% - var(--bubble-size) / 2);
   right: calc(var(--bubble-size) / -2);
 }
-#b4 {
+#b5 {
   right: calc(var(--t-width) / 2 - var(--bubble-size) / 2);
   bottom: calc(var(--bubble-size) / -2);
 }
-#b5 {
+#b6 {
   left: calc(var(--t-width) / 2 - var(--bubble-size) / 2);
   bottom: calc(var(--bubble-size) / -2);
-}
-#b6 {
-  top: calc(50% - var(--bubble-size) / 2);
-  left: calc(var(--bubble-size) / -2);
 }

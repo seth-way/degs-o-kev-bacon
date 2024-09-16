@@ -19,8 +19,9 @@
   --piece-width: calc(var(--t-width) * 0.6);
   --movie-color: blue;
   --star-color: red;
-  --hub-color: purple;
-  
+  --hub-color: #80CD32;
+  --piece-color: var(--text);
+
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 
   line-height: 1.5;
