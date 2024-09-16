@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@dnd-kit/core": "^6.1.0",
+    "@dnd-kit/utilities": "^3.2.2",
     "flubber": "^0.4.2",
     "framer-motion": "^11.5.4",
     "react": "^18.3.1",

@@ -1,9 +1,25 @@
 import './Triangles.css';
+import { useState, useEffect } from 'react';
+import { useDroppable } from '@dnd-kit/core';
 import Droppable from '../DnD/Droppable';
+import { getImagePath } from '../../lib/utils';
 
 const TriangleDown = ({ id, image, type }) => {
+  const { isOver, setNodeRef } = useDroppable({
+    id: id,
+    data: {
+      accepts: [type],
+    },
+    disabled: image !== '',
+  });
+
+  const style = {
+    background: isOver ? 'green' : undefined,
+    color: isOver ? 'black' : 'currentColor',
+  };
+
   return (
-    <Droppable id={id} className='triangle' type={type}>
+    <div id={id} ref={setNodeRef} style={style} className='triangle'>
       <svg
         viewBox='0 0 100 100'
         fill='black'
@@ -11,7 +27,7 @@ const TriangleDown = ({ id, image, type }) => {
       >
         <polygon
           strokeWidth='4'
-          stroke='var(--t-outline)'
+          stroke='currentColor'
           points='3 3, 97 3, 50 91'
           fill='var(--bg)'
         />
@@ -20,34 +36,17 @@ const TriangleDown = ({ id, image, type }) => {
             <polygon points='6.5 5, 93.5 5, 50 88' />
           </clipPath>
         </defs>
-        {/* <image
-    xlinkHref={image}
-    x="0"
-    y="-20"
-    width="100"
-    clipPath={`${id}-clip-path`}
-  /> */}
+        {image && (
+          <image
+            xlinkHref={getImagePath(image)}
+            x='0'
+            y='0'
+            width='100'
+            clipPath={`url(#${id}-clip-path)`}
+          />
+        )}
       </svg>
-      {/* <svg viewBox='0 0 150 130' fill='black'>
-        <polygon
-          strokeWidth='6'
-          stroke='var(--t-outline)'
-          points='3.75 0.5, 146.25 0.5, 75 124'
-        />
-        <defs>
-          <clipPath id={pathId}>
-            <polygon points='8.9 3.5, 141.1 3.5, 75 118' />
-          </clipPath>
-        </defs>
-        <image
-          xlinkHref={image}
-          x='25'
-          y='-20'
-          width='100'
-          clipPath={`${id}-clip-path`}
-        />
-      </svg> */}
-    </Droppable>
+    </div>
   );
 };
 

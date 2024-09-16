@@ -1,18 +1,31 @@
+import { useState, useEffect } from 'react';
 import './Bubble.css';
-import Droppable from '../DnD/Droppable';
+import { useDroppable } from '@dnd-kit/core';
 import { getImagePath } from '../../lib/utils';
 
 const Bubble = ({ id, image, type }) => {
-  console.log('type <><>', type, id);
+  const { isOver, setNodeRef } = useDroppable({
+    id: id,
+    data: {
+      accepts: [type],
+    },
+    disabled: image !== '',
+  });
+
+  const style = {
+    background: isOver ? 'green' : undefined,
+    color: isOver ? 'black' : 'currentColor',
+  };
+
   return (
-    <Droppable className='bubble' id={id} type={type}>
+    <div id={id} ref={setNodeRef} style={style} className='bubble'>
       <svg viewBox='0 0 100 100' fill='none'>
         <circle
           cx='50'
           cy='50'
           r='47'
           strokeWidth='6'
-          stroke='var(--b-outline)'
+          stroke='currentColor'
           fill='var(--bg)'
         />
         <defs>
@@ -30,7 +43,7 @@ const Bubble = ({ id, image, type }) => {
           />
         )}
       </svg>
-    </Droppable>
+    </div>
   );
 };
 

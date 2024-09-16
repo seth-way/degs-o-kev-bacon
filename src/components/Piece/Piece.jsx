@@ -1,40 +1,26 @@
 import './Piece.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDraggable, useDndMonitor } from '@dnd-kit/core';
+import { CSS } from '@dnd-kit/utilities';
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import { rectangle, rectangleClip, circleClip } from '../../assets/paths';
 import { getImagePath } from '../../lib/utils';
 
-const Piece = ({ data, type }) => {
+const Piece = ({ data, propStyle }) => {
   const { id, text, img } = data;
+  const type = id.startsWith('m') ? 'movie' : 'star';
   const imgPath = getImagePath(img);
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+  const { attributes, listeners, setNodeRef, transform, node } = useDraggable({
     id: id,
     data: {
       type: type,
     },
   });
 
-  //const animateSVG = animate;
-
-  useDndMonitor({
-    onDragStart(event) {
-      //console.log('start', event);
-    },
-    onDragMove(event) {
-      //console.log('move', event);
-      console.log('will accept??', event.over?.data?.current?.accepts);
-    },
-    onDragOver(event) {
-      //console.log('over', event);
-    },
-    onDragEnd(event) {
-      //console.log('end', event);
-    },
-    onDragCancel(event) {
-      //console.log('start', event);
-    },
-  });
+  // useEffect(() => {
+  //   // console.log(transform);
+  //   // console.log(listeners);
+  // }, [transform, listeners]);
 
   const style = transform
     ? {
@@ -44,8 +30,8 @@ const Piece = ({ data, type }) => {
 
   return (
     <button
-      ref={setNodeRef}
-      style={style}
+      ref={node}
+      style={{ ...style, ...propStyle }}
       {...listeners}
       {...attributes}
       id={id}
@@ -67,7 +53,7 @@ const Piece = ({ data, type }) => {
           width='90'
           clipPath={`url(#${id}-piece-clip-path)`}
         />
-        <g strokeWidth='4' stroke='white' fill='none'>
+        <g strokeWidth='4' stroke='currentColor' fill='none'>
           <path d={rectangle} />
         </g>
       </svg>

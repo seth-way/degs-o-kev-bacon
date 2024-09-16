@@ -1,10 +1,11 @@
 import './GameBoard.css';
 import { useState, useEffect } from 'react';
-import { DndContext } from '@dnd-kit/core';
+import { DndContext, DragOverlay } from '@dnd-kit/core';
 import { useParams } from 'react-router-dom';
 import useWindowSize from '../../lib/hooks/useWindowSize';
 import PlayArea from '../PlayArea/PlayArea';
 import Pieces from '../Pieces/Pieces';
+import Overlay from '../Overlay/Overlay';
 import Puzzle from '../../lib/Puzzle';
 import { getPuzzle } from '../../lib/apiCalls';
 
@@ -25,7 +26,6 @@ const GameBoard = () => {
 
   useEffect(() => {
     const fetchPuzzle = async id => {
-      console.log('id', id);
       try {
         const puzzleInfo = await getPuzzle(id);
         if (puzzleInfo instanceof Error) throw puzzleInfo;
@@ -53,6 +53,7 @@ const GameBoard = () => {
           data={puzzle?.stars || {}}
         />
       </section>
+      {/* <DragOverlay>{active ? <Overlay data={active} /> : null}</DragOverlay> */}
     </DndContext>
   );
 };

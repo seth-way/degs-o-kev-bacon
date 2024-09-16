@@ -1,12 +1,14 @@
 .pieces {
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: var(--t-gap);
-  height: 100%;
+  gap: var(--t-gap); */
   position: relative;
+  height: 300px;
+  width: 300px;
+  background: pink;
 }
 
 .pieces.portrait {
