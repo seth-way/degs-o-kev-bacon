@@ -45,6 +45,10 @@ const PlayArea = ({ puzzle }) => {
     },
   });
 
+  useEffect(() => {
+    if (puzzle) puzzle.checkGame(game);
+  }, [game, puzzle]);
+
   return (
     <section id='puzzle'>
       <TriangleUp
@@ -95,9 +99,12 @@ const PlayArea = ({ puzzle }) => {
 
   function handleDragOver(e) {}
   function handleDragEnd(e) {
+    const dropTarget = e.collisions[0];
     if (
-      e.collisions[0]?.data?.droppableContainer &&
-      !e.collisions[0]?.data?.droppableContainer?.disabled
+      dropTarget.id.includes('droppable') ||
+      (dropTarget.data?.droppableContainer &&
+        !dropTarget.data?.droppableContainer?.disabled &&
+        dropTarget?.data?.value > 0.2)
     ) {
       const dragType = e.active?.data?.current?.type;
       const validDrop =

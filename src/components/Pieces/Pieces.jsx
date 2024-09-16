@@ -13,23 +13,24 @@ const dropZones = ['t', 'b'].flatMap(letter =>
 const Pieces = ({ type, orientation, data }) => {
   const zoneRef = useRef(null);
   const [propStyles, setPropStyles] = useState(null);
-
   useEffect(() => {
     if (zoneRef?.current) {
-      const { current } = zoneRef;
       const board = document
         .getElementById('gameboard')
         .getBoundingClientRect();
       const length = Math.min(board.height, board.width);
-      const getStyles = orientation === 'landscape' ? (idx) => ({
-        top: (idx / 6) * length * 0.9,
-        left: (idx / 6) * length * 0.3,
-        color: 'var(--piece-color)',
-      }) : (idx) => ({
-        left: (idx / 6) * length * 0.9,
-        top: (idx / 6) * length * 0.3,
-        color: 'var(--piece-color)',
-      });
+      const getStyles =
+        orientation === 'landscape'
+          ? idx => ({
+              top: (idx / 6) * length * 0.9,
+              left: (idx / 6) * length * 0.3,
+              color: 'var(--piece-color)',
+            })
+          : idx => ({
+              left: (idx / 6) * length * 0.9,
+              top: (idx / 6) * length * 0.3,
+              color: 'var(--piece-color)',
+            });
 
       const initialStyles = new Array(6).fill().map((_, idx) => getStyles(idx));
 
@@ -86,8 +87,10 @@ const Pieces = ({ type, orientation, data }) => {
   function handleDragOver(e) {}
 
   function handleDragEnd(e) {
+    if (e.active?.data?.current?.type !== type) return;
     if (
-      e.active?.data?.current?.type === type &&
+      (e.collisions[0].id === `droppable-${type}` ||
+        e.collisions[0]?.data.value > 0.2) &&
       e.over?.data?.current?.accepts &&
       e.over?.data?.current?.accepts.includes(e.active?.data?.current?.type)
     ) {
