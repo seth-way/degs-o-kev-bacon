@@ -14,7 +14,6 @@ const TriangleDown = ({ id, image, type }) => {
   });
 
   const style = {
-    background: isOver ? 'green' : undefined,
     color: isOver ? 'black' : 'currentColor',
   };
 

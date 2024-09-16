@@ -17,13 +17,18 @@ const Pieces = ({ type, orientation, data }) => {
   useEffect(() => {
     if (zoneRef?.current) {
       const { current } = zoneRef;
-      const height = current.getBoundingClientRect().height;
-      const width = current.getBoundingClientRect().height;
-
-      const getStyles = idx => ({
-        top: (idx / 6) * height * 0.75,
-        left: (idx / 6) * width * 0.75,
-        color: 'purple',
+      const board = document
+        .getElementById('gameboard')
+        .getBoundingClientRect();
+      const length = Math.min(board.height, board.width);
+      const getStyles = orientation === 'landscape' ? (idx) => ({
+        top: (idx / 6) * length * 0.9,
+        left: (idx / 6) * length * 0.3,
+        color: 'var(--piece-color)',
+      }) : (idx) => ({
+        left: (idx / 6) * length * 0.9,
+        top: (idx / 6) * length * 0.3,
+        color: 'var(--piece-color)',
       });
 
       const initialStyles = new Array(6).fill().map((_, idx) => getStyles(idx));

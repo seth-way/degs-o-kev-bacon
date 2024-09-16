@@ -20,7 +20,8 @@
   --movie-color: blue;
   --star-color: red;
   --hub-color: purple;
-  
+  --piece-color: var(--text);
+
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 
   line-height: 1.5;
