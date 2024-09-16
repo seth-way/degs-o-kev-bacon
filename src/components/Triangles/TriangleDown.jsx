@@ -4,7 +4,7 @@ import { useDroppable } from '@dnd-kit/core';
 import Droppable from '../DnD/Droppable';
 import { getImagePath } from '../../lib/utils';
 
-const TriangleDown = ({ id, image, type }) => {
+const TriangleDown = ({ id, image, type, text }) => {
   const { isOver, setNodeRef } = useDroppable({
     id: id,
     data: {
@@ -45,6 +45,7 @@ const TriangleDown = ({ id, image, type }) => {
           />
         )}
       </svg>
+      {text && <p>{text}</p>}
     </div>
   );
 };
