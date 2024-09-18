@@ -3,12 +3,13 @@
   /* Colors */
   --bg: #242424;
   --text: rgba(255, 255, 255, 0.87);
+  --text-2: rgba(255, 255, 255, 0.66);;
   --primary: blue;
   --secondary: green;
   --accent: gray;
   /* Triangles */
-  --t-width: min(150px, 30vw);
-  --t-height: calc(var(--t-width) * 130 / 150);
+  --t-width: clamp(90px, 10vw,150px);
+  /* --t-height: calc(var(--t-width) * 130 / 150); */
   --t-height: var(--t-width);
   --t-gap: calc(var(--t-width) / 100);
   --t-outline: var(--accent);
@@ -16,13 +17,14 @@
   --bubble-size: calc(var(--t-width) / 2);
   --b-outline: var(--secondary);
   /* Game-Piece */
-  --piece-width: calc(var(--t-width) * 0.6);
+  --piece-width: calc(var(--t-width) * 0.7);
   --movie-color: blue;
   --star-color: red;
-  --hub-color: #80CD32;
+  --hub-color: #80cd32;
   --piece-color: var(--text);
 
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Limelight', Inter, system-ui, Avenir, Helvetica, Arial,
+    sans-serif;
 
   line-height: 1.5;
   font-weight: 400;
@@ -47,4 +49,8 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+}
+
+button {
+  font-family: 'Limelight'
 }

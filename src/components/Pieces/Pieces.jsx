@@ -1,106 +1,31 @@
 import './Pieces.css';
-import { useState, useEffect, useRef } from 'react';
-import { useDndMonitor } from '@dnd-kit/core';
-import Droppable from '../DnD/Droppable';
+import { useDroppable } from '@dnd-kit/core';
+import useWindowStore from '../../state/useWindowStore';
 import Piece from '../Piece/Piece';
+import { Star, Clapperboard } from 'lucide-react';
 
-const dropZones = ['t', 'b'].flatMap(letter =>
-  Array(6)
-    .fill(null)
-    .map((_, idx) => letter + (idx + 1))
-);
-
-const Pieces = ({ type, orientation, data }) => {
-  const zoneRef = useRef(null);
-  const [propStyles, setPropStyles] = useState(null);
-  useEffect(() => {
-    if (zoneRef?.current) {
-      const board = document
-        .getElementById('gameboard')
-        .getBoundingClientRect();
-      const length = Math.min(board.height, board.width);
-      const getStyles =
-        orientation === 'landscape'
-          ? idx => ({
-              top: (idx / 6) * length * 0.9,
-              left: (idx / 6) * length * 0.3,
-              color: 'var(--piece-color)',
-            })
-          : idx => ({
-              left: (idx / 6) * length * 0.9,
-              top: (idx / 6) * length * 0.3,
-              color: 'var(--piece-color)',
-            });
-
-      const initialStyles = new Array(6).fill().map((_, idx) => getStyles(idx));
-
-      const stylesById = Object.values(data).reduce((acc, item, idx) => {
-        const { id } = item;
-        acc[id] = initialStyles[idx];
-        return acc;
-      }, {});
-
-      setPropStyles(() => stylesById);
-    }
-  }, [data, orientation]);
-
-  useDndMonitor({
-    onDragStart(event) {
-      handleDragStart(event);
-    },
-    onDragOver(event) {
-      handleDragOver(event);
-    },
-    onDragEnd(event) {
-      handleDragEnd(event);
-    },
-    onDragMove(event) {
-      handleDragMove(event);
+const Pieces = ({ type }) => {
+  const { setNodeRef } = useDroppable({
+    id: `droppable-${type}`,
+    data: {
+      accepts: [type],
     },
   });
 
+  const layout = useWindowStore(state => state.layout);
+
   return (
-    <Droppable id={`droppable-${type}`} type={type}>
-      <div className={`pieces ${type} ${orientation}`} ref={zoneRef}>
-        {Object.values(data).map(item => (
-          <Piece
-            key={`${item.id}_piece`}
-            data={item}
-            propStyle={propStyles[item.id]}
-          />
-        ))}
-      </div>
-    </Droppable>
+    <div className={`pieces ${type} ${layout}`} ref={setNodeRef} id={`pieces-${type}`}>
+      {new Array(6).fill().map((_, idx) => (
+        <Piece key={`${type}_piece_${idx}`} type={type} idx={idx} />
+      ))}
+      {type === 'star' ? (
+        <Star id='star-marker' />
+      ) : (
+        <Clapperboard id='movie-marker' />
+      )}
+    </div>
   );
-
-  function handleDragStart(e) {
-    if (e.active?.data?.current?.type === type) {
-      propStyles[e.active.id].opacity = 1;
-    }
-  }
-
-  function handleDragMove(e) {
-    if (e.active?.data?.current?.type === type) {
-    }
-  }
-
-  function handleDragOver(e) {}
-
-  function handleDragEnd(e) {
-    if (e.active?.data?.current?.type !== type) return;
-    if (
-      (e.collisions[0].id === `droppable-${type}` ||
-        e.collisions[0]?.data.value > 0.2) &&
-      e.over?.data?.current?.accepts &&
-      e.over?.data?.current?.accepts.includes(e.active?.data?.current?.type)
-    ) {
-      propStyles[e.active.id].left += e.delta.x;
-      propStyles[e.active.id].top += e.delta.y;
-      if (dropZones.includes(e.over.id)) {
-        propStyles[e.active.id].opacity = 0;
-      }
-    }
-  }
 };
 
 export default Pieces;

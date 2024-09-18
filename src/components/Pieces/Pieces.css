@@ -7,7 +7,7 @@
   gap: var(--t-gap);
   position: relative;
   height: calc(3 * var(--t-width));
-  width: calc(1.5 * var(--t-width));
+  width: calc(1.4 * var(--t-width));
   border: thick solid var(--text);
   border-radius: 1.5rem;
 }
@@ -16,4 +16,11 @@
   flex-direction: row;
   width: calc(3 * var(--t-width));
   height: calc(1.5 * var(--t-width));
+}
+
+#movie-marker,
+#star-marker {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
 }

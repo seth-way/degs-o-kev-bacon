@@ -1,24 +1,34 @@
 import './Triangles.css';
-import { useState, useEffect } from 'react';
+import { useShallow } from 'zustand/shallow';
+import usePuzzleStore from '../../state/usePuzzleStore';
 import { useDroppable } from '@dnd-kit/core';
-import Droppable from '../DnD/Droppable';
 import { getImagePath } from '../../lib/utils';
+import { Star, Clapperboard } from 'lucide-react';
 
-const TriangleDown = ({ id, image, type, text }) => {
+const TriangleDown = ({ id }) => {
+  const puzzle = usePuzzleStore(state => state.puzzle);
+  const zone = usePuzzleStore(state => state.zones[id]);
+  const isSolved = usePuzzleStore(state => state.isSolved);
+  const hubId = puzzle.hub?.id;
+  const type = hubId ? (hubId.startsWith('m') ? 'star' : 'movie') : '';
+  const img = zone?.img || '';
+  const text = zone?.text || '';
   const { isOver, setNodeRef } = useDroppable({
     id: id,
     data: {
       accepts: [type],
     },
-    disabled: image !== '',
+    disabled: img !== '',
   });
 
   const style = {
-    color: isOver ? 'black' : 'currentColor',
+    color: isOver ? 'var(--text-2)' : 'currentColor',
   };
 
+  const className = 'triangle' + (isSolved ? ' solved' : '');
+
   return (
-    <div id={id} ref={setNodeRef} style={style} className='triangle'>
+    <div id={id} ref={setNodeRef} style={style} className={className}>
       <svg
         viewBox='0 0 100 100'
         fill='black'
@@ -35,9 +45,9 @@ const TriangleDown = ({ id, image, type, text }) => {
             <polygon points='6.5 5, 93.5 5, 50 88' />
           </clipPath>
         </defs>
-        {image && (
+        {img && (
           <image
-            xlinkHref={getImagePath(image)}
+            xlinkHref={getImagePath(img)}
             x='0'
             y='0'
             width='100'
@@ -45,7 +55,15 @@ const TriangleDown = ({ id, image, type, text }) => {
           />
         )}
       </svg>
-      {text && <p>{text}</p>}
+      {text ? (
+        <p>{text}</p>
+      ) : type === 'movie' ? (
+        <Clapperboard />
+      ) : type === 'star' ? (
+        <Star />
+      ) : (
+        ''
+      )}
     </div>
   );
 };

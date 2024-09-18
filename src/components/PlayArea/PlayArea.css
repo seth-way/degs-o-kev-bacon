@@ -4,3 +4,10 @@
   position: relative;
 }
 
+#puzzle.portrait {
+  .buttons {
+    position: fixed;
+    left: 0;
+    top: 0.5rem;
+  }
+}

@@ -3,7 +3,36 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  gap: calc(var(--t-width) / 2);
+  gap: calc(var(--t-width) / 2.5);
+
+  .buttons {
+    top: calc(-1.5 * var(--bubble-size));
+    width: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    button {
+      margin: 0.25rem;
+      border: 2px solid var(--text);
+      background: var(--bg);
+      color: var(--text) !important;
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    button:hover {
+      cursor: pointer;
+      color: var(--hub-color) !important;
+    }
+  }
+
+  .confetti-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
 }
 
 #gameboard.portrait {

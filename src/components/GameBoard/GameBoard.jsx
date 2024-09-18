@@ -1,61 +1,153 @@
 import './GameBoard.css';
-import { useState, useEffect } from 'react';
-import { DndContext, DragOverlay } from '@dnd-kit/core';
+import { useEffect } from 'react';
+import usePuzzleStore from '../../state/usePuzzleStore';
+import useWindowStore from '../../state/useWindowStore';
+import { DndContext } from '@dnd-kit/core';
 import { useParams } from 'react-router-dom';
-import useWindowSize from '../../lib/hooks/useWindowSize';
 import PlayArea from '../PlayArea/PlayArea';
 import Pieces from '../Pieces/Pieces';
-import Overlay from '../Overlay/Overlay';
 import Puzzle from '../../lib/Puzzle';
 import { getPuzzle } from '../../lib/apiCalls';
+import { motion } from 'framer-motion';
+import Confetti from 'react-confetti';
+import { Link } from 'react-router-dom';
+import { House, RotateCcw, CircleHelp } from 'lucide-react';
+
+const dropZones = ['t', 'b'].flatMap(letter =>
+  Array(6)
+    .fill(null)
+    .map((_, idx) => letter + (idx + 1))
+);
 
 const GameBoard = () => {
   const { puzzleId } = useParams();
-  const [puzzle, setPuzzle] = useState(null);
-  const [width, height] = useWindowSize();
-  const [isLandscape, setIsLandscape] = useState(true);
+  const puzzle = usePuzzleStore(state => state.puzzle);
+  const setPuzzle = usePuzzleStore(state => state.setPuzzle);
+  const resetGame = usePuzzleStore(state => state.resetGame);
+  const initializePieces = usePuzzleStore(state => state.initializePieces);
+  const isSolved = usePuzzleStore(state => state.isSolved);
+  const pieces = usePuzzleStore(state => state.pieces);
+  const movePiece = usePuzzleStore(state => state.movePiece);
+  const togglePiece = usePuzzleStore(state => state.togglePiece);
+  const zones = usePuzzleStore(state => state.zones);
+  const updateZone = usePuzzleStore(state => state.updateZone);
+  const size = useWindowStore(state => state.size);
+  const layout = useWindowStore(state => state.layout);
+  const { height, width } = size;
 
   useEffect(() => {
-    if (height > width) setIsLandscape(false);
-    else {
-      setIsLandscape(true);
-    }
-  }, [width, height]);
-
-  useEffect(() => {}, []);
-
-  useEffect(() => {
+    const piecesContainer = document.getElementById('pieces-movie');
     const fetchPuzzle = async id => {
       try {
         const puzzleInfo = await getPuzzle(id);
         if (puzzleInfo instanceof Error) throw puzzleInfo;
         setPuzzle(new Puzzle(puzzleInfo));
+
+        const board = piecesContainer.getBoundingClientRect();
+        const length = Math.max(board.height, board.width);
+        initializePieces(layout, length);
       } catch (err) {
         console.error('<><> ERROR <><>', err);
       }
     };
-    fetchPuzzle(puzzleId);
-  }, []);
+    if (puzzleId && piecesContainer) fetchPuzzle(puzzleId);
+  }, [puzzleId, setPuzzle, initializePieces, layout]);
 
-  const orientation = isLandscape ? 'landscape' : 'portrait';
   return (
-    <DndContext id={'dnd-context'}>
-      <section id='gameboard' className={orientation}>
-        <Pieces
-          type='movie'
-          orientation={orientation}
-          data={puzzle?.movies || {}}
-        />
-        <PlayArea puzzle={puzzle} />
-        <Pieces
-          type='star'
-          orientation={orientation}
-          data={puzzle?.stars || {}}
-        />
+    <DndContext
+      id={'dnd-context'}
+      onDragStart={handleDragStart}
+      onDragMove={handleDragMove}
+      onDragEnd={handleDragEnd}
+      onDragOver={handleDragOver}
+    >
+      <section id='gameboard' className={layout}>
+        <Pieces type='movie' />
+        <PlayArea />
+        <Pieces type='star' />
+        <div className='buttons'>
+          <Link to='/'>
+            <motion.button
+              whileHover={{ scale: 1.07, color: 'var(--hub-color)' }}
+              whileTap={{ scale: 0.9 }}
+              transition={{ type: 'spring' }}
+              onClick={resetGame}
+            >
+              <House />
+            </motion.button>
+          </Link>
+          <motion.button
+            whileHover={{ scale: 1.07, color: 'var(--hub-color)' }}
+            whileTap={{ scale: 0.9 }}
+            transition={{ type: 'spring' }}
+            onClick={resetGame}
+          >
+            <RotateCcw />
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.07, color: 'var(--hub-color)' }}
+            whileTap={{ scale: 0.9 }}
+            transition={{ type: 'spring' }}
+          >
+            <CircleHelp />
+          </motion.button>
+        </div>
+        <div className='confetti-wrapper'>
+          {isSolved && <Confetti width={width} height={height} />}
+        </div>
       </section>
-      {/* <DragOverlay>{active ? <Overlay data={active} /> : null}</DragOverlay> */}
     </DndContext>
   );
+
+  function handleDragOver(e) {}
+  function handleDragEnd(e) {
+    const [, idxKey] = e.active.id.split('_');
+    if (idxKey) {
+      const idx = Number(idxKey);
+      const dropTarget = e.collisions[0];
+      if (
+        dropTarget.id.includes('droppable') ||
+        (dropTarget.data?.droppableContainer &&
+          !dropTarget.data?.droppableContainer?.disabled &&
+          dropTarget?.data?.value > 0.2)
+      ) {
+        const dragType = e.active?.data?.current?.type;
+        const validDrop =
+          e.collisions[0]?.data?.droppableContainer?.data?.current?.accepts?.includes(
+            dragType
+          );
+        if (validDrop) {
+          movePiece(dragType + 's', idx, e.delta.x, e.delta.y);
+          if (dropZones.includes(e.over?.id)) {
+            const dropId = e.over.id;
+            const dragId = pieces[dragType + 's'][idx].id;
+            const dragImg = pieces[dragType + 's'][idx].img;
+            const dragText = pieces[dragType + 's'][idx].text;
+            updateZone(dropId, {
+              current: dragId,
+              img: dragImg,
+              text: dragText,
+            });
+            togglePiece(dragType + 's', idx, 0);
+          }
+        }
+      }
+    }
+  }
+  function handleDragMove(e) {
+    //console.log(e);
+  }
+  function handleDragStart(e) {
+    const [, idxKey] = e.active.id.split('_');
+    const pieceIdx = Number(idxKey);
+    const type = e.active?.data?.current?.type;
+    togglePiece(type + 's', pieceIdx, 1);
+    const { id } = pieces[type + 's'][pieceIdx];
+    const zone = Object.entries(zones).find(entry => entry[1].current === id);
+    if (zone) {
+      updateZone(zone[0], { img: '', text: '', current: '' });
+    }
+  }
 };
 
 export default GameBoard;
