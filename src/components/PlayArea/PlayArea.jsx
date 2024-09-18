@@ -15,13 +15,18 @@ const dropZones = ['t', 'b'].flatMap(letter =>
 );
 
 const PlayArea = () => {
+  const [rotation, setRotation] = useState(0);
   //const game = useGameStore(state => state.game);
   const isSolved = usePuzzleStore(state => state.isSolved);
   const puzzle = usePuzzleStore(state => state.puzzle);
   const layout = useWindowStore(state => state.layout);
 
-  const initial = { rotate: 0 };
-  const animate = isSolved ? { rotate: 1080 } : {};
+  useEffect(() => {
+    if (isSolved) setRotation(prev => prev + 1800);
+  }, [isSolved]);
+
+  const initial = { rotate: rotation };
+  const animate = { rotate: rotation };
   const transition = { duration: 3, repeat: 0 };
   const className = layout + (isSolved ? ' solved' : '');
 

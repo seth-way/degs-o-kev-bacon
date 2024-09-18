@@ -77,6 +77,7 @@ const usePuzzleStore = create(
         state.pieces = { ...state.initialPieces };
         state.zones = { ...initialZones };
         state.zones.hub = state.puzzle.hub;
+        state.isSolved = false;
       }),
     movePiece: (type, idx, left, top) =>
       set(state => {

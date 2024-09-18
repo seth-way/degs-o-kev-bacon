@@ -12,6 +12,7 @@ import { getPuzzles } from './lib/apiCalls';
 function App() {
   const setPuzzles = usePuzzleStore(state => state.setPuzzles);
   const setSize = useWindowStore(state => state.setSize);
+  const isSolved = usePuzzleStore(state => state.isSolved);
   useWindowSize();
   useEffect(() => {
     if (window) {
@@ -20,6 +21,11 @@ function App() {
       setSize({ height, width });
     }
   }, [setSize]);
+
+  useEffect(() => {
+    if (isSolved) document.body.style.pointerEvents = 'none';
+    else document.body.style.pointerEvents = 'auto';
+  }, [isSolved]);
 
   useEffect(() => {
     const fetchPuzzles = async () => {
