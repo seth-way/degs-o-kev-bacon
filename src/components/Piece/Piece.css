@@ -1,9 +1,9 @@
 .piece {
-  width: max(var(--piece-width), 80px);
-  height: max(var(--piece-width), 80px);
+  width: var(--piece-width);
+  height: var(--piece-width);
   background-color: transparent;
   padding: 0.5rem;
-  z-index: 5;
+  z-index: 10;
   display: flex;
   flex-direction: column;
   align-items: center;

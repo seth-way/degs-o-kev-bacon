@@ -22,8 +22,6 @@ export default class Puzzle {
   }
 
   checkGame(game) {
-    console.log('game <><>', game);
-    console.log('wheel <><>', this.wheel);
     const incomplete = Object.values(game).some(space => !space.current);
     //if (incomplete) console.log(incomplete);
     const b1 = game.b1.current;
@@ -36,9 +34,7 @@ export default class Puzzle {
       ];
       const solution2 = [b1, ...solution1.slice(1).reverse()];
       const gameState = wheelOrder.map(id => game[id].current);
-      console.log('sol1 <>', solution1);
-      console.log('sol2', solution2);
-      console.log('game', gameState);
+
       console.log(
         'winner? ',
         areDeepEql(gameState, solution1) || areDeepEql(gameState, solution2)

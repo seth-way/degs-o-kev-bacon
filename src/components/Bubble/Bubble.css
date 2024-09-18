@@ -2,6 +2,27 @@
   width: var(--bubble-size);
   height: var(--bubble-size);
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+  }
+
+  svg.lucide {
+    position: relative;
+    height: 20%;
+    color: var(--text-2);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+}
+
+.bubble:hover svg.lucide {
+  opacity: 1;
 }
 
 #hub {

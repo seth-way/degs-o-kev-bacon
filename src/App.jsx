@@ -1,11 +1,35 @@
 import './App.css';
-import { useState, useEffect, useLayoutEffect } from 'react';
+import { useEffect } from 'react';
+import usePuzzleStore from './state/usePuzzleStore';
+import useWindowStore from './state/useWindowStore';
+import useWindowSize from './lib/hooks/useWindowSize';
 import { Routes, Route } from 'react-router-dom';
 import Home from './components/Home/Home';
 import GameBoard from './components/GameBoard/GameBoard';
 import Error from './components/Error/Error';
+import { getPuzzles } from './lib/apiCalls';
 
 function App() {
+  const setPuzzles = usePuzzleStore(state => state.setPuzzles);
+  const setSize = useWindowStore(state => state.setSize);
+  useWindowSize();
+  useEffect(() => {
+    if (window) {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      setSize({ height, width });
+    }
+  }, [setSize]);
+
+  useEffect(() => {
+    const fetchPuzzles = async () => {
+      const puzzles = await getPuzzles();
+      setPuzzles(puzzles);
+    };
+
+    fetchPuzzles();
+  }, []);
+
   return (
     <>
       <Routes>

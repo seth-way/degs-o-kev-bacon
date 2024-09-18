@@ -8,7 +8,7 @@
   justify-content: center;
   flex-wrap: wrap;
 
-  svg {
+  svg:first-child {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -17,8 +17,16 @@
     overflow: hidden;
   }
 
-  svg > image {
+  svg:first-child > image {
     filter: blur(0.15rem);
+  }
+
+  svg.lucide {
+    position: relative;
+    width: 10%;
+    color: var(--text-2);
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
   }
 
   p {
@@ -37,11 +45,23 @@
   }
 }
 
+.triangle.solved {
+  svg:first-child > image {
+    filter: blur(0);
+  }
+}
+.triangle:hover svg.lucide {
+  opacity: 1;
+}
+
 #t1,
 #t3,
 #t5 {
   p {
     margin-top: calc(var(--t-height) * 0.2);
+  }
+  svg.lucide {
+    margin-top: 20%;
   }
 }
 
@@ -50,6 +70,9 @@
 #t6 {
   p {
     margin-top: calc(var(--t-height) * -0.2);
+  }
+  svg.lucide {
+    margin-top: -25%;
   }
 }
 
