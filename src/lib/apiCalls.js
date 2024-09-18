@@ -1,6 +1,8 @@
 export const getPuzzle = async id => {
   try {
-    const res = await fetch(`http://localhost:3002/api/puzzles/${id}`);
+    const res = await fetch(
+      `https://degs-o-kev-bacon-api.vercel.app/api/puzzles/${id}`
+    );
     if (!res.ok) throw new Error('error fetching puzzle ' + id);
     const puzzle = await res.json();
     return puzzle;
@@ -12,7 +14,9 @@ export const getPuzzle = async id => {
 
 export const getPuzzles = async () => {
   try {
-    const res = await fetch('http://localhost:3002/api/puzzles');
+    const res = await fetch(
+      'https://degs-o-kev-bacon-api.vercel.app/api/puzzles'
+    );
     if (!res.ok) throw new Error('error fetching initial puzzles');
     const puzzles = await res.json();
     console.log(puzzles);
