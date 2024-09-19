@@ -6,6 +6,7 @@ import { DndContext } from '@dnd-kit/core';
 import { useParams } from 'react-router-dom';
 import PlayArea from '../PlayArea/PlayArea';
 import Pieces from '../Pieces/Pieces';
+import Loading from '../Loading/Loading';
 import Puzzle from '../../lib/Puzzle';
 import { getPuzzle } from '../../lib/apiCalls';
 import { motion } from 'framer-motion';
@@ -22,7 +23,10 @@ const dropZones = ['t', 'b'].flatMap(letter =>
 const GameBoard = () => {
   const { puzzleId } = useParams();
   const puzzle = usePuzzleStore(state => state.puzzle);
+  const isLoading = usePuzzleStore(state => state.isLoading);
+  const setIsLoading = usePuzzleStore(state => state.setIsLoading);
   const setPuzzle = usePuzzleStore(state => state.setPuzzle);
+  const clearPuzzle = usePuzzleStore(state => state.clearPuzzle);
   const resetGame = usePuzzleStore(state => state.resetGame);
   const initializePieces = usePuzzleStore(state => state.initializePieces);
   const isSolved = usePuzzleStore(state => state.isSolved);
@@ -42,26 +46,35 @@ const GameBoard = () => {
         const puzzleInfo = await getPuzzle(id);
         if (puzzleInfo instanceof Error) throw puzzleInfo;
         setPuzzle(new Puzzle(puzzleInfo));
-
         const board = piecesContainer.getBoundingClientRect();
         const length = Math.max(board.height, board.width);
         initializePieces(layout, length);
+        if (puzzle.hub?.id) setIsLoading(false);
       } catch (err) {
         console.error('<><> ERROR <><>', err);
       }
     };
     if (puzzleId && piecesContainer) fetchPuzzle(puzzleId);
-  }, [puzzleId, setPuzzle, initializePieces, layout]);
+  }, [puzzleId, setPuzzle, initializePieces, layout, puzzle, setIsLoading]);
+
+  useEffect(() => {
+    clearPuzzle;
+    setIsLoading(true);
+    return () => {
+      clearPuzzle();
+    };
+  }, [clearPuzzle, setIsLoading]);
 
   return (
     <DndContext
       id={'dnd-context'}
       onDragStart={handleDragStart}
-      onDragMove={handleDragMove}
       onDragEnd={handleDragEnd}
-      onDragOver={handleDragOver}
     >
-      <section id='gameboard' className={layout}>
+      <section
+        id='gameboard'
+        className={`${layout} ${isLoading ? 'loading' : ''}`}
+      >
         <Pieces type='movie' />
         <PlayArea />
         <Pieces type='star' />
@@ -71,7 +84,6 @@ const GameBoard = () => {
               whileHover={{ scale: 1.07, color: 'var(--hub-color)' }}
               whileTap={{ scale: 0.9 }}
               transition={{ type: 'spring' }}
-              onClick={resetGame}
             >
               <House />
             </motion.button>
@@ -92,14 +104,14 @@ const GameBoard = () => {
             <CircleHelp />
           </motion.button>
         </div>
-        <div className='confetti-wrapper'>
+        <div className='animation-wrapper'>
+          {isLoading && <Loading />}
           {isSolved && <Confetti width={width} height={height} />}
         </div>
       </section>
     </DndContext>
   );
 
-  function handleDragOver(e) {}
   function handleDragEnd(e) {
     const [, idxKey] = e.active.id.split('_');
     if (idxKey) {
@@ -134,9 +146,7 @@ const GameBoard = () => {
       }
     }
   }
-  function handleDragMove(e) {
-    //console.log(e);
-  }
+
   function handleDragStart(e) {
     const [, idxKey] = e.active.id.split('_');
     const pieceIdx = Number(idxKey);

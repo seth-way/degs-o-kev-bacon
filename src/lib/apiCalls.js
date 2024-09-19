@@ -19,7 +19,6 @@ export const getPuzzles = async () => {
     );
     if (!res.ok) throw new Error('error fetching initial puzzles');
     const puzzles = await res.json();
-    console.log(puzzles);
     return puzzles;
   } catch (err) {
     console.error('<><> ERROR FETCHING PUZZLES <><>', err);

@@ -32,10 +32,21 @@ const usePuzzleStore = create(
         state.puzzle = newPuzzle;
         state.zones.hub = newPuzzle.hub;
       }),
+    clearPuzzle: () =>
+      set(state => {
+        state.puzzle = {};
+        state.zones = { ...initialZones };
+        state.pieces = { stars: [], movies: [] };
+      }),
     isSolved: false,
     setIsSolved: status =>
       set(state => {
         state.isSolved = status;
+      }),
+    isLoading: true,
+    setIsLoading: status =>
+      set(state => {
+        state.isLoading = status;
       }),
     /* DROP ZONES */
     zones: { ...initialZones },
@@ -115,42 +126,3 @@ function getInitialPlacements(data, layout, length) {
   );
   return placements;
 }
-/*
-
-/*
-const usePuzzleStore = create()(
-  immer(set => ({
-
-    puzzle: {},
-    setPuzzle: newPuzzle =>
-      set(state => ({
-        puzzle: newPuzzle,
-        zones: { ...state.zones, hub: { ...newPuzzle.hub, disabled: true } },
-      })),
-    isSolved: false,
-    setIsSolved: status => set({ isSolved: status }),
-
-    zones: { ...initialZones },
-
-    pieces: { stars: [], movies: [] },
-    initialPieces: { stars: [], movies: [] },
-    initializePieces: (layout, length) =>
-      set(state => ({
-        pieces: {
-          stars: getInitialPlacements(state.puzzle.stars, layout, length),
-          movies: getInitialPlacements(state.puzzle.movies, layout, length),
-        },
-        initialPieces: {
-          stars: getInitialPlacements(state.puzzle.stars, layout, length),
-          movies: getInitialPlacements(state.puzzle.movies, layout, length),
-        },
-      })),
-    resetPieces: () => set(state => ({ pieces: { ...state.initialPieces } })),
-    movePiece: (type, idx, left, top) =>
-      set(state => {
-        console.log('pieces <>', state.pieces.stars);
-        state.pieces[type][idx].left = left;
-      }),
-  }))
-);
-*/
