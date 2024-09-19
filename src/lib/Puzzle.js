@@ -22,8 +22,9 @@ export default class Puzzle {
   }
 
   checkGame(game) {
-    const incomplete = Object.values(game).some(space => !space.current);
+    const incomplete = Object.values(game).some(space => space.current === '');
     if (incomplete) return false;
+
     const b1 = game.b1.current;
     const b1Idx = this.wheel.indexOf(b1);
     const solution1 = [
@@ -39,12 +40,8 @@ export default class Puzzle {
   giveHint(game) {
     const zones = { ...game };
     delete zones.hub;
-    // const occupiedZones = Object.values(zones).reduce(
-    //   (total, zone) => (total + zone.current ? 1 : 0),
-    //   0
-    // );
-    // if (occupiedZones < 3) return 'Fill in more pieces & try again.';
-    console.log('wheel --->', this.wheel);
+    const notStarted = Object.values(zones).every(zone => !zone.current);
+    if (notStarted) return 'RULES_GUIDE';
     for (const [zone, { current }] of Object.entries(zones)) {
       if (!current) continue;
       const [zone1, zone2] = getNeighboringZones(zone);
@@ -59,7 +56,7 @@ export default class Puzzle {
         return this.getHintMessage(neighbor2, current);
     }
 
-    return 'Fill in more pieces & try again.';
+    return 'Fill in more pieces & ask again.';
   }
 
   getHintMessage(id1, id2) {

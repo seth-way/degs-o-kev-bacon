@@ -2,12 +2,19 @@ import './GameBoard.css';
 import { useEffect } from 'react';
 import usePuzzleStore from '../../state/usePuzzleStore';
 import useWindowStore from '../../state/useWindowStore';
-import { DndContext } from '@dnd-kit/core';
+import {
+  DndContext,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
 import { useParams } from 'react-router-dom';
 import PlayArea from '../PlayArea/PlayArea';
 import Pieces from '../Pieces/Pieces';
 import Loading from '../Loading/Loading';
 import Puzzle from '../../lib/Puzzle';
+import Hint from '../Hint/Hint';
 import { getPuzzle } from '../../lib/apiCalls';
 import { motion } from 'framer-motion';
 import Confetti from 'react-confetti';
@@ -30,6 +37,7 @@ const GameBoard = () => {
   const resetGame = usePuzzleStore(state => state.resetGame);
   const initializePieces = usePuzzleStore(state => state.initializePieces);
   const isSolved = usePuzzleStore(state => state.isSolved);
+  const setIsSolved = usePuzzleStore(state => state.setIsSolved);
   const pieces = usePuzzleStore(state => state.pieces);
   const movePiece = usePuzzleStore(state => state.movePiece);
   const togglePiece = usePuzzleStore(state => state.togglePiece);
@@ -37,25 +45,32 @@ const GameBoard = () => {
   const updateZone = usePuzzleStore(state => state.updateZone);
   const size = useWindowStore(state => state.size);
   const layout = useWindowStore(state => state.layout);
+  const hint = useWindowStore(state => state.hint);
+  const setHint = useWindowStore(state => state.setHint);
   const { height, width } = size;
 
   useEffect(() => {
-    const piecesContainer = document.getElementById('pieces-movie');
     const fetchPuzzle = async id => {
       try {
         const puzzleInfo = await getPuzzle(id);
         if (puzzleInfo instanceof Error) throw puzzleInfo;
         setPuzzle(new Puzzle(puzzleInfo));
-        const board = piecesContainer.getBoundingClientRect();
-        const length = Math.max(board.height, board.width);
-        initializePieces(layout, length);
-        if (puzzle.hub?.id) setIsLoading(false);
       } catch (err) {
         console.error('<><> ERROR <><>', err);
       }
     };
-    if (puzzleId && piecesContainer) fetchPuzzle(puzzleId);
-  }, [puzzleId, setPuzzle, initializePieces, layout, puzzle, setIsLoading]);
+    if (puzzleId) fetchPuzzle(puzzleId);
+  }, [puzzleId, setPuzzle]);
+
+  useEffect(() => {
+    const piecesContainer = document.getElementById('pieces-movie');
+    if (piecesContainer && puzzle.hub?.id) {
+      const board = piecesContainer.getBoundingClientRect();
+      const length = Math.max(board.height, board.width);
+      initializePieces(layout, length);
+      setIsLoading(false);
+    }
+  }, [puzzle, setIsLoading, layout, initializePieces]);
 
   useEffect(() => {
     clearPuzzle;
@@ -65,15 +80,38 @@ const GameBoard = () => {
     };
   }, [clearPuzzle, setIsLoading]);
 
+  useEffect(() => {
+    if (puzzle?.checkGame && zones?.hub) setIsSolved(puzzle.checkGame(zones));
+  }, [puzzle, zones, setIsSolved, isSolved]);
+
+  const mouseSensor = useSensor(MouseSensor, {
+    // Require the mouse to move by 10 pixels before activating
+    activationConstraint: {
+      distance: 10,
+    },
+  });
+  const touchSensor = useSensor(TouchSensor, {
+    // Press delay of 250ms, with tolerance of 5px of movement
+    activationConstraint: {
+      delay: 75,
+      tolerance: 5,
+    },
+  });
+
+  const sensors = useSensors(mouseSensor, touchSensor);
+
   return (
     <DndContext
       id={'dnd-context'}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
+      sensors={sensors}
     >
       <section
         id='gameboard'
-        className={`${layout} ${isLoading ? 'loading' : ''}`}
+        className={`${layout} ${isLoading ? 'loading' : ''} ${
+          hint ? 'hint' : ''
+        }`}
       >
         <Pieces type='movie' />
         <PlayArea />
@@ -108,6 +146,7 @@ const GameBoard = () => {
         <div className='animation-wrapper'>
           {isLoading && <Loading />}
           {isSolved && <Confetti width={width} height={height} />}
+          {hint && <Hint />}
         </div>
       </section>
     </DndContext>
@@ -161,8 +200,9 @@ const GameBoard = () => {
   }
 
   function handleGetHint() {
+    if (isLoading || isSolved) return;
     const hint = puzzle.giveHint(zones);
-    console.log('hint <><>', hint);
+    setHint(hint);
   }
 };
 

@@ -53,8 +53,6 @@ const usePuzzleStore = create(
     updateZone: (zone, info) =>
       set(state => {
         state.zones[zone] = info;
-        const isSolved = state.puzzle.checkGame(state.zones);
-        state.isSolved = isSolved;
       }),
     /* PIECES */
     pieces: { stars: [], movies: [] },
