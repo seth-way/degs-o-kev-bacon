@@ -100,6 +100,7 @@ const GameBoard = () => {
             whileHover={{ scale: 1.07, color: 'var(--hub-color)' }}
             whileTap={{ scale: 0.9 }}
             transition={{ type: 'spring' }}
+            onClick={handleGetHint}
           >
             <CircleHelp />
           </motion.button>
@@ -157,6 +158,11 @@ const GameBoard = () => {
     if (zone) {
       updateZone(zone[0], { img: '', text: '', current: '' });
     }
+  }
+
+  function handleGetHint() {
+    const hint = puzzle.giveHint(zones);
+    console.log('hint <><>', hint);
   }
 };
 
