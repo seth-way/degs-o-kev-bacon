@@ -52,5 +52,9 @@
         transform: scale(1.15);
       }
     }
+
+    .loading-svg {
+      height: calc(var(--t-width) * 0.5);
+    }
   }
 }

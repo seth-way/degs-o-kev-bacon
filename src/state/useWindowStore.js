@@ -8,6 +8,10 @@ const useWindowStore = create(set => ({
     set({ layout });
     set({ size: { height, width } });
   },
+  hint: '',
+  setHint: hint => {
+    set({ hint });
+  },
 }));
 
 export default useWindowStore;

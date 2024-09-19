@@ -1,4 +1,5 @@
 import './Bubble.css';
+import { useState, useEffect } from 'react';
 import usePuzzleStore from '../../state/usePuzzleStore';
 import { motion } from 'framer-motion';
 import { useDroppable } from '@dnd-kit/core';
@@ -6,11 +7,24 @@ import { getImagePath } from '../../lib/utils';
 import { Star, Clapperboard } from 'lucide-react';
 // old props => , image, type, solved
 const Bubble = ({ id }) => {
+  const [rotation, setRotation] = useState(0);
   const puzzle = usePuzzleStore(state => state.puzzle);
   const zone = usePuzzleStore(state => state.zones[id]);
   const isSolved = usePuzzleStore(state => state.isSolved);
   const hubId = puzzle.hub?.id;
-  const type = id === 'hub' ? 'hub' : hubId ? (hubId.startsWith('s') ? 'star' : 'movie') : '';
+
+  useEffect(() => {
+    if (isSolved) setRotation(prev => prev - 1800);
+  }, [isSolved]);
+
+  const type =
+    id === 'hub'
+      ? 'hub'
+      : hubId
+      ? hubId.startsWith('s')
+        ? 'star'
+        : 'movie'
+      : '';
   const img = zone?.img || '';
   const { isOver, setNodeRef } = useDroppable({
     id: id,
@@ -31,8 +45,8 @@ const Bubble = ({ id }) => {
             : 'currentColor',
         };
 
-  const initial = { rotate: 0 };
-  const animate = isSolved && type === 'hub' ? { rotate: -1080 } : {};
+  const initial = { rotate: rotation };
+  const animate = { rotate: rotation };
   const transition = { duration: 3, repeat: 0 };
 
   return (

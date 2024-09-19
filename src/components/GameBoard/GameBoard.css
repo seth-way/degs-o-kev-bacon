@@ -20,6 +20,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      pointer-events: auto;
     }
 
     button:hover {
@@ -28,7 +29,7 @@
     }
   }
 
-  .confetti-wrapper {
+  .animation-wrapper {
     position: fixed;
     top: 0;
     left: 0;
@@ -37,4 +38,42 @@
 
 #gameboard.portrait {
   flex-direction: column;
+
+  .buttons {
+    position: fixed;
+    top: 0.5rem;
+  }
+}
+
+#gameboard.loading {
+  .pieces,
+  #puzzle {
+    opacity: 0;
+  }
+  .animation-wrapper {
+    opacity: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    pointer-events: none;
+  }
+}
+
+#gameboard.hint {
+  .pieces,
+  #puzzle, .buttons {
+    filter: blur(4px) brightness(0.5);
+    pointer-events: none;
+  }
+
+  .animation-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    text-shadow: 0 0 3px black;
+  }
 }
