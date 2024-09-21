@@ -1,4 +1,5 @@
 import './Pieces.css';
+import PropTypes from 'prop-types';
 import { useDroppable } from '@dnd-kit/core';
 import useWindowStore from '../../state/useWindowStore';
 import Piece from '../Piece/Piece';
@@ -33,3 +34,7 @@ const Pieces = ({ type }) => {
 };
 
 export default Pieces;
+
+Pieces.propTypes = {
+  type: PropTypes.string,
+};

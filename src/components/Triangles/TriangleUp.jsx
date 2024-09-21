@@ -1,5 +1,5 @@
 import './Triangles.css';
-import { useShallow } from 'zustand/shallow';
+import PropTypes from 'prop-types';
 import usePuzzleStore from '../../state/usePuzzleStore';
 import { useDroppable } from '@dnd-kit/core';
 import { getImagePath } from '../../lib/utils';
@@ -51,9 +51,21 @@ const TriangleUp = ({ id }) => {
           />
         )}
       </svg>
-      {text ? <p>{text}</p> : type === 'movie' ? <Clapperboard /> : type === 'star' ? <Star /> : ''}
+      {text ? (
+        <p>{text}</p>
+      ) : type === 'movie' ? (
+        <Clapperboard />
+      ) : type === 'star' ? (
+        <Star />
+      ) : (
+        ''
+      )}
     </div>
   );
 };
 
 export default TriangleUp;
+
+TriangleUp.propTypes = {
+  id: PropTypes.string,
+};

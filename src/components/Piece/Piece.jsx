@@ -1,11 +1,8 @@
 import './Piece.css';
-import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import usePuzzleStore from '../../state/usePuzzleStore';
-import { useShallow } from 'zustand/shallow';
-import { useDraggable, useDndMonitor } from '@dnd-kit/core';
-import { CSS } from '@dnd-kit/utilities';
-import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
-import { rectangle, rectangleClip, circleClip } from '../../assets/paths';
+import { useDraggable } from '@dnd-kit/core';
+import { rectangle, circleClip } from '../../assets/paths';
 import { getImagePath } from '../../lib/utils';
 
 const Piece = ({ idx, type }) => {
@@ -64,3 +61,8 @@ const Piece = ({ idx, type }) => {
 };
 
 export default Piece;
+
+Piece.propTypes = {
+  idx: PropTypes.number,
+  type: PropTypes.string,
+};

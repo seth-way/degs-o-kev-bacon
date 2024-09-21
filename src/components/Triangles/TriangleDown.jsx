@@ -1,5 +1,5 @@
 import './Triangles.css';
-import { useShallow } from 'zustand/shallow';
+import PropTypes from 'prop-types';
 import usePuzzleStore from '../../state/usePuzzleStore';
 import { useDroppable } from '@dnd-kit/core';
 import { getImagePath } from '../../lib/utils';
@@ -69,3 +69,7 @@ const TriangleDown = ({ id }) => {
 };
 
 export default TriangleDown;
+
+TriangleDown.propTypes = {
+  id: PropTypes.string
+}

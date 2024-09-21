@@ -1,11 +1,12 @@
 import './Bubble.css';
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import usePuzzleStore from '../../state/usePuzzleStore';
 import { motion } from 'framer-motion';
 import { useDroppable } from '@dnd-kit/core';
 import { getImagePath } from '../../lib/utils';
 import { Star, Clapperboard } from 'lucide-react';
-// old props => , image, type, solved
+
 const Bubble = ({ id }) => {
   const [rotation, setRotation] = useState(0);
   const puzzle = usePuzzleStore(state => state.puzzle);
@@ -95,3 +96,7 @@ const Bubble = ({ id }) => {
 };
 
 export default Bubble;
+
+Bubble.propTypes = {
+  id: PropTypes.string,
+};

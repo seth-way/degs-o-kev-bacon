@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
 import './PlayArea.css';
-import { useDndMonitor } from '@dnd-kit/core';
+import { useState, useEffect } from 'react';
 import usePuzzleStore from '../../state/usePuzzleStore';
 import useWindowStore from '../../state/useWindowStore';
 import TriangleUp from '../Triangles/TriangleUp';
@@ -8,17 +7,9 @@ import TriangleDown from '../Triangles/TriangleDown';
 import Bubble from '../Bubble/Bubble';
 import { motion } from 'framer-motion';
 
-const dropZones = ['t', 'b'].flatMap(letter =>
-  Array(6)
-    .fill(null)
-    .map((_, idx) => letter + (idx + 1))
-);
-
 const PlayArea = () => {
   const [rotation, setRotation] = useState(0);
-  //const game = useGameStore(state => state.game);
   const isSolved = usePuzzleStore(state => state.isSolved);
-  const puzzle = usePuzzleStore(state => state.puzzle);
   const layout = useWindowStore(state => state.layout);
 
   useEffect(() => {
