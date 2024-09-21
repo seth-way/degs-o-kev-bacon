@@ -3,13 +3,14 @@ import { useEffect } from 'react';
 import usePuzzleStore from './state/usePuzzleStore';
 import useWindowStore from './state/useWindowStore';
 import useWindowSize from './lib/hooks/useWindowSize';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Home from './components/Home/Home';
 import GameBoard from './components/GameBoard/GameBoard';
-import Error from './components/Error/Error';
+import ErrorMessage from './components/ErrorMessage/ErrorMessage';
 import { getPuzzles } from './lib/apiCalls';
 
 function App() {
+  const navigate = useNavigate();
   const setPuzzles = usePuzzleStore(state => state.setPuzzles);
   const setSize = useWindowStore(state => state.setSize);
   const isSolved = usePuzzleStore(state => state.isSolved);
@@ -30,6 +31,7 @@ function App() {
   useEffect(() => {
     const fetchPuzzles = async () => {
       const puzzles = await getPuzzles();
+      if (puzzles instanceof Error) navigate(`/error/500`);
       setPuzzles(puzzles);
     };
 
@@ -41,8 +43,8 @@ function App() {
       <Routes>
         <Route exact path='/' element={<Home />} />
         <Route path='puzzles/:puzzleId' element={<GameBoard />} />
-        <Route path='error/:errorCode' element={<Error />} />
-        <Route path='*' element={<Error />} />
+        <Route path='error/:status' element={<ErrorMessage />} />
+        <Route path='*' element={<ErrorMessage />} />
       </Routes>
     </>
   );

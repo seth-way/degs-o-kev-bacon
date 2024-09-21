@@ -4,12 +4,13 @@ import usePuzzleStore from '../../state/usePuzzleStore';
 import useWindowStore from '../../state/useWindowStore';
 import {
   DndContext,
+  PointerSensor,
   MouseSensor,
   TouchSensor,
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import PlayArea from '../PlayArea/PlayArea';
 import Pieces from '../Pieces/Pieces';
 import Loading from '../Loading/Loading';
@@ -48,19 +49,16 @@ const GameBoard = () => {
   const hint = useWindowStore(state => state.hint);
   const setHint = useWindowStore(state => state.setHint);
   const { height, width } = size;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPuzzle = async id => {
-      try {
-        const puzzleInfo = await getPuzzle(id);
-        if (puzzleInfo instanceof Error) throw puzzleInfo;
-        setPuzzle(new Puzzle(puzzleInfo));
-      } catch (err) {
-        console.error('<><> ERROR <><>', err);
-      }
+      const puzzleInfo = await getPuzzle(id);
+      if (puzzleInfo instanceof Error) navigate('/error/500');
+      else setPuzzle(new Puzzle(puzzleInfo));
     };
     if (puzzleId) fetchPuzzle(puzzleId);
-  }, [puzzleId, setPuzzle]);
+  }, [puzzleId, setPuzzle, navigate]);
 
   useEffect(() => {
     const piecesContainer = document.getElementById('pieces-movie');
@@ -98,7 +96,9 @@ const GameBoard = () => {
     },
   });
 
-  const sensors = useSensors(mouseSensor, touchSensor);
+  const pointerSensor = useSensor(PointerSensor);
+
+  const sensors = useSensors(mouseSensor, touchSensor, pointerSensor);
 
   return (
     <DndContext

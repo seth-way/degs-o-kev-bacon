@@ -12,6 +12,7 @@ const wheelOrder = [
   'b6',
   't6',
 ];
+
 export default class Puzzle {
   constructor(puzzleInfo) {
     const { hub, movies, stars, wheel } = puzzleInfo;
@@ -64,7 +65,7 @@ export default class Puzzle {
     const movieId = id1.startsWith('m') ? id1 : id2;
     const star = this.stars[starId].text;
     const movie = this.movies[movieId].text;
-    return `${star} wasn't in ${movie}`;
+    return `${star} wasn't in ${movie}.`;
   }
 }
 

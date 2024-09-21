@@ -3,12 +3,12 @@
   /* Colors */
   --bg: #242424;
   --text: rgba(255, 255, 255, 0.87);
-  --text-2: rgba(255, 255, 255, 0.66);;
+  --text-2: rgba(255, 255, 255, 0.66);
   --primary: blue;
   --secondary: green;
   --accent: gray;
   /* Triangles */
-  --t-width: clamp(90px, 10vw,150px);
+  --t-width: clamp(90px, 10vw, 150px);
   /* --t-height: calc(var(--t-width) * 130 / 150); */
   --t-height: var(--t-width);
   --t-gap: calc(var(--t-width) / 100);
@@ -44,6 +44,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  overflow: hidden;
 }
 
 h1 {
@@ -52,5 +53,5 @@ h1 {
 }
 
 button {
-  font-family: 'Limelight'
+  font-family: 'Limelight';
 }

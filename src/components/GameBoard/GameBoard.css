@@ -11,6 +11,7 @@
     position: absolute;
     display: flex;
     justify-content: center;
+    background: var(--bg);
     button {
       margin: 0.25rem;
       border: 2px solid var(--text);
