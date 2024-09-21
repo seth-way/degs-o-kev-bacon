@@ -12,14 +12,15 @@
   h1 {
     margin: 0;
     color: var(--text);
-    font-size: clamp(40px, 3vw, 100px);
+    font-size: clamp(25px, 3vw, 100px);
     display: flex;
+    gap: 0;
 
     .logo-wrapper {
       display: inline-block;
       position: relative;
-      height: 0.75rem;
-      width: 0.75rem;
+      height: clamp(8px, 1vw, 33px);
+      aspect-ratio: 1/1;
       overflow: visible;
 
       svg {
@@ -46,7 +47,7 @@
       height: calc(var(--t-width) * 0.5);
       width: calc(var(--t-width) * 0.5);
       overflow: hidden;
-      border: 3px solid #BBBBBB;
+      border: 3px solid #bbbbbb;
       border-radius: 50%;
       display: flex;
       align-items: center;
