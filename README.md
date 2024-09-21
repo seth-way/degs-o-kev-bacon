@@ -1,8 +1,25 @@
-# 6&deg; of Kevin Bacon
+<h1 align="center"><a href="https://degs-o-kev-bacon.vercel.app/" target="_blank">6&deg; of Kevin Bacon</a></h1>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Abstract:
+[//]: <> (Briefly describe what you built and its features. What problem is the app solving? How does this application solve that problem?)
 
-Currently, two official plugins are available:
+## Installation Instructions:
+[//]: <> (What steps does a person have to take to get your app cloned down and running?)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Preview of App:
+[//]: <> (Provide ONE gif or screenshot of your application - choose the "coolest" piece of functionality to show off.)
+<div align="center">
+  <img src="/src/assets/images/site-nav.gif" alt="preview of app navigation" width="400px" height="auto">
+</div>
+
+## Context:
+[//]: <> (Give some context for the project here. How long did you have to work on it? How far into the Turing program are you?)
+
+## Contributors:
+[//]: <> (Who worked on this application? Link to their GitHubs.)
+
+## Learning Goals:
+[//]: <> (What were the learning goals of this project? What tech did you work with?)
+
+## Wins + Challenges:
+[//]: <> (What are 2-3 wins you have from this project? What were some challenges you faced - and how did you get over them?)
