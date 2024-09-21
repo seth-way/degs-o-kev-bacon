@@ -21,6 +21,7 @@
   --movie-color: blue;
   --star-color: red;
   --hub-color: #80cd32;
+  --hub-color: #ffbb00;
   --piece-color: var(--text);
 
   font-family: 'Limelight', Inter, system-ui, Avenir, Helvetica, Arial,

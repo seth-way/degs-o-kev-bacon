@@ -7,6 +7,7 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import Home from './components/Home/Home';
 import GameBoard from './components/GameBoard/GameBoard';
 import ErrorMessage from './components/ErrorMessage/ErrorMessage';
+import Footer from './components/Footer/Footer';
 import { getPuzzles } from './lib/apiCalls';
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
         <Route path='error/:status' element={<ErrorMessage />} />
         <Route path='*' element={<ErrorMessage />} />
       </Routes>
+      <Footer />
     </>
   );
 }
