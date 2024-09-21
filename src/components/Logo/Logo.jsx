@@ -1,21 +1,29 @@
 import './Logo.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const Logo = () => {
+  const [hasLoaded, setHasLoaded] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [timeoutRef, setTimeoutRef] = useState(null);
   const [delay, setDelay] = useState(0.7);
   const handleClick = () => {
-    console.log('clicked');
-    setDelay(0);
-    setClicked(true);
-    if (timeoutRef) clearTimeout(timeoutRef);
-    const newRef = setTimeout(() => {
-      setClicked(false);
-    }, 0.05);
-    setTimeoutRef(newRef);
+    if (hasLoaded) {
+      setDelay(0);
+      setClicked(true);
+      if (timeoutRef) clearTimeout(timeoutRef);
+      const newRef = setTimeout(() => {
+        setClicked(false);
+      }, 0.05);
+      setTimeoutRef(newRef);
+    }
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setHasLoaded(true);
+    }, 1000);
+  }, []);
 
   const dur1 = 1;
   const initial = { opacity: 0, scale: 100, x: -1000 };
@@ -38,7 +46,7 @@ const Logo = () => {
         animate={animate}
         transition={transition}
         style={{ originX: 1, originY: 0.6 }}
-        className='logo'
+        className={'logo' + (hasLoaded ? ' loaded' : '')}
         viewBox='0 0 100 100'
         fill='var(--bg)'
         strokeWidth='20'
