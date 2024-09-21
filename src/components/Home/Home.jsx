@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { getImagePath } from '../../lib/utils';
 import usePuzzleStore from '../../state/usePuzzleStore';
+import Logo from '../Logo/Logo';
 import Loading from '../Loading/Loading';
 
 const Home = () => {
@@ -23,7 +24,10 @@ const Home = () => {
 
   return (
     <div id='home'>
-      <h1>6&deg; of Kevin Bacon</h1>
+      <h1>
+        6<span className='logo-wrapper'><Logo/></span>
+        &nbsp;of Kevin Bacon
+      </h1>
       <p>challenge your movie trivia.</p>
       <div className='buttons'>
         {isLoading ? (

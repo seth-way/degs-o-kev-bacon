@@ -15,7 +15,11 @@ const Pieces = ({ type }) => {
   const layout = useWindowStore(state => state.layout);
 
   return (
-    <div className={`pieces ${type} ${layout}`} ref={setNodeRef} id={`pieces-${type}`}>
+    <div
+      className={`pieces ${type} ${layout}`}
+      ref={setNodeRef}
+      id={`pieces-${type}`}
+    >
       {new Array(6).fill().map((_, idx) => (
         <Piece key={`${type}_piece_${idx}`} type={type} idx={idx} />
       ))}

@@ -8,8 +8,8 @@
   position: relative;
   height: calc(3 * var(--t-width));
   width: calc(1.4 * var(--t-width));
-  border: thick solid var(--text);
-  border-radius: 1.5rem;
+  border: 3px solid var(--text);
+  border-radius: 1rem;
 }
 
 .pieces.portrait {

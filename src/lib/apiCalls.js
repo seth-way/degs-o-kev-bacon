@@ -8,6 +8,7 @@ export const getPuzzle = async id => {
     return puzzle;
   } catch (err) {
     console.error('<><> ERROR FETCHING PUZZLE <><>', err);
+    err.status = err.status || 500;
     return err;
   }
 };
@@ -22,6 +23,7 @@ export const getPuzzles = async () => {
     return puzzles;
   } catch (err) {
     console.error('<><> ERROR FETCHING PUZZLES <><>', err);
+    err.status = err.status || 500;
     return err;
   }
 };

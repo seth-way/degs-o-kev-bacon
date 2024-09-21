@@ -1,0 +1,17 @@
+.logo {
+  color: var(--text);
+  pointer-events: none;
+
+  *&:focus {
+    outline: none;
+  }
+}
+
+.logo:hover {
+  cursor: pointer;
+  color: var(--hub-color);
+}
+
+.logo.loaded {
+  pointer-events: auto;
+}
