@@ -122,6 +122,7 @@ const GameBoard = () => {
               whileHover={{ scale: 1.07, color: 'var(--hub-color)' }}
               whileTap={{ scale: 0.9 }}
               transition={{ type: 'spring' }}
+              onClick={handleHomeBtnClick}
             >
               <House />
             </motion.button>
@@ -203,6 +204,10 @@ const GameBoard = () => {
     if (isLoading || isSolved) return;
     const hint = puzzle.giveHint(zones);
     setHint(hint);
+  }
+
+  function handleHomeBtnClick() {
+    resetGame();
   }
 };
 
