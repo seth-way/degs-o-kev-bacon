@@ -33,7 +33,7 @@
 
 ## Context:
 [//]: <> (Give some context for the project here. How long did you have to work on it? How far into the Turing program are you?)
-6&deg;-o-Kev Bacon was a solo project completed during my 5th month at Turing. I spent roughly 30 hours writing the application, including creating a custom API to store & serve the unique puzzles.
+<strong>6&deg; of Kevin Bacon</strong> was a solo project completed during my 5th month at Turing. I spent roughly 30 hours writing the application, including creating a custom API to store & serve the unique puzzles.
 
 ## Contributors:
 [//]: <> (Who worked on this application? Link to their GitHubs.)
