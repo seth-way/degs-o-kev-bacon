@@ -7,6 +7,7 @@ import {
 	PointerSensor,
 	MouseSensor,
 	TouchSensor,
+	KeyboardSensor,
 	useSensor,
 	useSensors
 } from '@dnd-kit/core';
@@ -96,8 +97,9 @@ const GameBoard = () => {
 	});
 
 	const pointerSensor = useSensor(PointerSensor);
+	const keyboardSensor = useSensor(KeyboardSensor);
 
-	const sensors = useSensors(mouseSensor, touchSensor, pointerSensor);
+	const sensors = useSensors(mouseSensor, touchSensor, pointerSensor, keyboardSensor);
 
 	return (
 		<DndContext
