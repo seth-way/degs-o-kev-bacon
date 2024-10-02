@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap');
+
 .triangle {
   width: var(--t-width);
   height: var(--t-height);
@@ -8,17 +10,17 @@
   justify-content: center;
   flex-wrap: wrap;
 
-  svg:first-child {
+  svg {
     position: absolute;
     top: 0;
-    bottom: 0;
     left: 0;
-    right: 0;
+    height: 100%;
+    width: 100%;
     overflow: hidden;
   }
 
-  svg:first-child > image {
-    filter: blur(0.15rem);
+  svg.triangle-img {
+    filter: blur(0.15rem) brightness(0.7);
   }
 
   svg.lucide {
@@ -31,7 +33,7 @@
 
   p {
     z-index: 6;
-    color: white;
+    color: var(--hub-color);
     text-shadow: 0 0 3px black;
     font-weight: 600;
     filter: drop-shadow(0 0 3px black);
@@ -41,13 +43,15 @@
     line-clamp: 2;
     -webkit-box-orient: vertical;
     width: calc(var(--t-width) * 0.7);
-    font-size: 0.7rem;
+    font-family: "EB Garamond", serif;
+    font-size: clamp(0.5rem, 1.5vw, 0.9rem);
+    max-width: 55%;
   }
 }
 
 .triangle.solved {
-  svg:first-child > image {
-    filter: blur(0);
+  svg.triangle-img {
+    filter: blur(0) brightness(1);
   }
 }
 .triangle:hover svg.lucide {

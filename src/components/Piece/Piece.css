@@ -1,67 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap');
+
 .piece {
-  width: var(--piece-width);
-  height: var(--piece-width);
-  background-color: transparent;
-  padding: 0.5rem;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  border: none;
-  flex: 0 0 max(var(--piece-width), 80px);
-  font-size: 0.7rem;
-  overflow: hidden;
-  position: absolute;
-  transition: opacity 0.3s ease-in-out;
-  touch-action: none;
+	width: var(--piece-width);
+	height: var(--piece-width);
+	background-color: transparent;
+	padding: 0.5rem;
+	box-sizing: border-box;
+	z-index: 10;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	border: none;
+	flex: 0 0 max(var(--piece-width), 80px);
+	font-size: 0.7rem;
+	overflow: hidden;
+	position: absolute;
+	transition: opacity 0.3s ease-in-out;
+	touch-action: none;
 
-  svg {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    overflow: hidden;
-  }
+	svg {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		overflow: hidden;
+	}
 
-  p {
-    margin: 0;
-    width: 100%;
-    z-index: 6;
-    color: white;
-    font-size: clamp(0.5rem, 1vw, 0.85rem);
-    text-shadow: 0 0 3px black;
-    font-weight: 800;
-    filter: drop-shadow(0 0 3px black);
-    transition: transform 0.3s ease-in-out;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    line-clamp: 4;
-    -webkit-box-orient: vertical;
-  }
+	p {
+		margin: 0;
+		width: 100%;
+		z-index: 6;
+		color: var(--hub-color);
+    font-family: "EB Garamond", serif;
+		font-size: clamp(0.5rem, 1vw, 0.85rem);
+		text-shadow: 0 0 3px black;
+		font-weight: 800;
+		filter: drop-shadow(0 0 3px black);
+    -webkit-filter: drop-shadow(0 0 3px black);
+    -ms-filter: drop-shadow(0 0 3px black);
+		transition: transform 0.3s ease-in-out;
+		overflow: hidden;
+		display: -webkit-box;
+		-webkit-line-clamp: 4;
+		line-clamp: 4;
+		-webkit-box-orient: vertical;
+	}
 }
 
 button.movie {
-  svg > image {
-    filter: blur(0.15rem);
-  }
+	.piece-img {
+		transform: translate3d(0, 0, 0);
+		filter: blur(0.15rem) brightness(0.7);
+	}
 }
 
 button.star {
-  p {
-    transform: scale(0);
-  }
+	p {
+		transform: scale(0);
+	}
 }
 
 button.star:hover {
-  & > p {
-    transform: scale(1);
-  }
+	& > p {
+		transform: scale(1);
+	}
 }
 
 button.piece:hover {
-  cursor: pointer;
+	cursor: pointer;
 }
