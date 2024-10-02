@@ -40,7 +40,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <main>
       <Routes>
         <Route exact path='/' element={<Home />} />
         <Route path='puzzles/:puzzleId' element={<GameBoard />} />
@@ -48,7 +48,7 @@ function App() {
         <Route path='*' element={<ErrorMessage />} />
       </Routes>
       <Footer />
-    </>
+    </main>
   );
 }
 

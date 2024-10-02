@@ -33,8 +33,8 @@ const Piece = ({ idx, type }) => {
 			{...listeners}
 			{...attributes}
 			id={id}
-			className={`piece ${type}`}>
-
+			className={`piece ${type}`}
+			aria-label={text}>
 			<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="piece-img">
 				<g fill="var(--bg)">
 					<path d={rectangle} />
@@ -52,7 +52,7 @@ const Piece = ({ idx, type }) => {
 					clipPath={`url(#${id}-piece-clip-path)`}
 				/>
 			</svg>
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="piece-overlay">
+			<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="piece-overlay">
 				<g strokeWidth="4" stroke="currentColor" fill="none">
 					<path d={rectangle} />
 				</g>

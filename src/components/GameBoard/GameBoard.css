@@ -5,7 +5,7 @@
   position: relative;
   gap: calc(var(--t-width) / 2.5);
 
-  .buttons {
+  nav {
     top: calc(-1.5 * var(--bubble-size));
     width: 100%;
     position: absolute;
