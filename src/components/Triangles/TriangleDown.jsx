@@ -26,9 +26,9 @@ const TriangleDown = ({ id }) => {
 	};
 
 	const className = 'triangle' + (isSolved ? ' solved' : '');
-
+	const ariaLabel = `Movie Slot ${id}. ` + (text ? `Current piece ${text}` : 'No current piece.');
 	return (
-		<div id={id} ref={setNodeRef} style={style} className={className}>
+		<div id={id} ref={setNodeRef} style={style} className={className} aria-label={ariaLabel}>
 			<svg
 				viewBox="0 0 100 100"
 				fill="black"
