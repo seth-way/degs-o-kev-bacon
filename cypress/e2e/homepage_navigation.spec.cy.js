@@ -20,7 +20,7 @@ describe('Navigate to a puzzle', () => {
   });
 
   it('should navigate to a puzzle on a puzzle-button click', () => {
-    cy.get('.buttons a.movie-card').first().click();
+    cy.get('.buttons .movie-card').first().click();
     cy.get('#hub').find('image').should('have.attr', 'xlink:href')
     .and('include', '/AiAYAqwpM5xmiFrAIeQvUXDCVvo.jpg');
   });
