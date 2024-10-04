@@ -24,7 +24,7 @@ describe('Should load the puzzle', () => {
     cy.get('#puzzle').find('div > svg.lucide').should('have.length', 12);
     cy.get('#hub').should('have.descendants', 'image')
     // load the buttons
-    cy.get('.buttons').find('button').should('have.length', 3);
+    cy.get('nav').find('button').should('have.length', 3);
   });
 
   it('Should load movie pieces, star pieces, and the hub image', () => {
