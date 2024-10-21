@@ -39,6 +39,11 @@
 [//]: <> (Who worked on this application? Link to their GitHubs.)
 This app was a concept created, built & deployed by <a href="https://github.com/seth-way">Seth Way</a>.
 
+## Architecture & Tech Diagram
+<div align="center">
+  <img src="/src/assets/images/architecture.png" alt="app architecture diagram" width="400px" height="auto">
+</div>
+
 ## Learning Goals:
 [//]: <> (What were the learning goals of this project? What tech did you work with?)
 - The goal of this app was to reinforce skills in React, React Router, Async JS & E2E-Testing with [Cypress](https://www.cypress.io/).
@@ -50,6 +55,7 @@ This app was a concept created, built & deployed by <a href="https://github.com/
 ## WINS:
 - The game ties together several new concepts I wasn't sure I could pull off. My idea required using a drag-n-drop interface, creating SVG paths to clip images to various shapes & using [framer-motion](https://www.framer.com/motion/) to create smooth animations. All these new concepts came together nicely & I'm happy with the final UI.
 - The app's various pieces of state became cumbersome to work with & so I made a decision to refactor all state to use a [ZuStand](https://zustand.docs.pmnd.rs/getting-started/introduction) store. It took time away from developing new features, but overall it was worth it. After the refactor, managing state became much more cut & dry. Most importantly, I was able to work with a useful new library in the process.
+- 🏅 Won 1st Runner-Up at Turing Demo Competition - 2410.
  
 ## CHALLENGES:
 - The DnD-Kit Library comes with several useful new hooks. However, my use case was unique and so finding relevant examples was an issue. It required patience, trial & error & lots of debugging to integrate into my app.
